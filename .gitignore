@@ -1,0 +1,17 @@
+/.env
+/.env.backup
+/.env.production
+/auth.json
+/vendor
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/storage/logs/*.log
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/app/public/*
+/database/*.sqlite
+/.phpunit.result.cache
