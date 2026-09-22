@@ -21,9 +21,7 @@ php artisan storage:link
 php artisan serve
 ```
 
-Buka `http://localhost:8000`. Seeder membuat `admin@example.com` dan
-`viewer@example.com` dengan password `password`. Role Manager dapat dibuat dari
-halaman registrasi lalu disetujui admin.
+Buka `http://localhost:8000`. 
 
 Untuk memperbarui snapshot inventaris, jalankan:
 
