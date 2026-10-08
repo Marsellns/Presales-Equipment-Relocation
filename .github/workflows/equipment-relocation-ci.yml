@@ -1,0 +1,33 @@
+name: Equipment Relocation CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: equipment-relocation-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Laravel and Equipment Relocation checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Build PHP 8.2 test image
+        run: docker build --pull -f ci/Dockerfile -t simaster-selected-ci:ci .
+
+      - name: Run Laravel tests
+        run: docker run --rm simaster-selected-ci:ci php artisan test
+
+      - name: Run Equipment Relocation asset tests
+        run: docker run --rm -v "$PWD:/app:ro" -w /app node:22-alpine node --test tests/equipment-relocation-inventory.test.cjs
