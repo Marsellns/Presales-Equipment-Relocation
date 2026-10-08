@@ -1,16 +1,22 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
-        DB::statement('ALTER TABLE document_circulations MODIFY current_step TINYINT UNSIGNED NOT NULL DEFAULT 2');
+        Schema::table('document_circulations', function (Blueprint $table): void {
+            $table->unsignedTinyInteger('current_step')->default(2)->change();
+        });
     }
 
     public function down(): void
     {
-        DB::statement('ALTER TABLE document_circulations MODIFY current_step TINYINT UNSIGNED NOT NULL DEFAULT 1');
+        Schema::table('document_circulations', function (Blueprint $table): void {
+            $table->unsignedTinyInteger('current_step')->default(1)->change();
+        });
     }
 };

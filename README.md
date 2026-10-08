@@ -39,3 +39,7 @@ Test aplikasi:
 php artisan test
 node --test tests/equipment-relocation-inventory.test.cjs
 ```
+
+## Production dan Jenkins
+
+Lihat [panduan rilis production](docs/production-rollout.md) untuk CI Windows/PHP 8.2 dan pemasangan selektif ke SIMASTER yang sudah berjalan.

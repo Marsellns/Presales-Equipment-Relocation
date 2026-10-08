@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\DocumentCirculation;
 use App\Models\EquipmentRelocation;
+use App\Models\EquipmentRelocationInventory;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -30,6 +31,7 @@ class EquipmentRelocationPresalesTest extends TestCase
         $viewer = $this->userWithRole('viewer');
         $snapshot = json_decode(file_get_contents(public_path('data/equipment_relocation_inventory.json')), true);
         $key = $snapshot['rows'][0][0];
+        EquipmentRelocationInventory::create(['uniq_key' => $key]);
 
         $this->actingAs($admin)->get(route('equipment-relocation.index'))
             ->assertOk()->assertSee('Equipment Relocation')->assertSee('chart.umd.min.js');

@@ -15,3 +15,6 @@
 /storage/app/public/*
 /database/*.sqlite
 /.phpunit.result.cache
+/public/css/filament/
+/public/js/filament/
+/public/fonts/filament/
