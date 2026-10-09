@@ -1,4 +1,4 @@
 ---
 deployment:
   tasks:
-    - /bin/bash -euo pipefail -- ./scripts/stage-cpanel-modules.sh
+    - /bin/bash ./scripts/stage-cpanel-modules.sh
