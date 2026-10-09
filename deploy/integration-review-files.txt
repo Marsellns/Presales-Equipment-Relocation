@@ -3,6 +3,7 @@ app/Filament/Modules/ModuleReportPage.php
 app/Filament/Modules/ReportModulePlugin.php
 app/Filament/Modules/ReportModuleRegistry.php
 app/Filament/Pages/OperationalReport.php
+app/Http/Middleware/RenderReportInFilament.php
 app/Providers/AppServiceProvider.php
 app/Providers/Filament/ReportPanelProvider.php
 app/Support/ReportModules.php
