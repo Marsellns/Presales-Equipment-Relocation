@@ -1,0 +1,6 @@
+---
+# Stages source outside public_html. This does not activate the website.
+deployment:
+  tasks:
+    - /bin/mkdir -p "$HOME/simaster-presales-staging"
+    - /bin/cp -R app bootstrap config database public resources routes storage artisan composer.json composer.lock .env.example "$HOME/simaster-presales-staging/"
