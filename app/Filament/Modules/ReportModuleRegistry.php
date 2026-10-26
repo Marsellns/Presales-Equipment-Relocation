@@ -3,18 +3,17 @@
 namespace App\Filament\Modules;
 
 use App\Filament\Modules\EquipmentRelocation\EquipmentRelocationPlugin;
-use App\Filament\Modules\Infrastructure\InfrastructurePlugin;
 use App\Filament\Modules\PoMonitoring\PoMonitoringPlugin;
 use App\Support\ReportModules;
 use Illuminate\Routing\Route;
 
-/** Registers only the three module groups requested for this application. */
+/** Registers only Equipment Relocation and PO Monitoring. */
 class ReportModuleRegistry
 {
     /** @return array<ReportModulePlugin> */
     public static function plugins(): array
     {
-        return [new InfrastructurePlugin, new EquipmentRelocationPlugin, new PoMonitoringPlugin];
+        return [new EquipmentRelocationPlugin, new PoMonitoringPlugin];
     }
 
     /** @return array<class-string<ModuleReportPage>> */

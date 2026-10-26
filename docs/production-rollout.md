@@ -1,6 +1,6 @@
 # Persiapan rilis production SIMASTER (PHP 8.2)
 
-Repository ini berisi Infrastruktur Management dan submodulnya, Equipment Relocation, serta PO Monitoring (PO HQ, PO Varcost, Presales). Kode diuji dengan Laravel 12, Filament 5, PHP 8.2, SQLite, dan MySQL. Jenkinsfile menjalankan pengujian pada Windows melalui Docker.
+Repository ini hanya berisi Equipment Relocation dan PO Monitoring (PO HQ, PO Varcost, Presales), beserta kerangka Laravel dan file integrasi bersama yang dibutuhkan. Kode menggunakan Laravel 12, Filament 5, PHP 8.2, SQLite, dan MySQL. Jenkinsfile menjalankan pengujian pada Windows melalui Docker.
 
 ## Jalankan CI di Jenkins Windows
 
@@ -33,7 +33,7 @@ File bersama yang wajib dibandingkan dan digabungkan dengan aplikasi lengkap ada
 3. GitHub Actions mengunggah paket ke folder staging di luar document root lewat SSH/SFTP. Proses ini harus berhenti bila baseline/hash file live tidak cocok dengan yang disetujui.
 4. Di server, periksa PHP CLI 8.2 dan `composer check-platform-reqs --no-dev`. Pertahankan `.env`, `APP_KEY`, `storage/app`, database, dan modul lain. Publikasikan perubahan secara atomik atau dengan waktu maintenance singkat; jangan memakai sinkronisasi `--delete` pada root live.
 5. Jalankan `php artisan optimize:clear`, `php artisan migrate --force`, `php artisan filament:assets`, lalu `php artisan optimize`. Jangan jalankan `composer setup`, `php artisan key:generate`, `migrate:fresh`, atau seeder data pada aplikasi lama.
-6. Uji login, izin admin/viewer, semua submodul Infrastruktur, Equipment Relocation, PO HQ, PO Varcost, dan Presales, termasuk upload/download, tabel, ekspor, serta aset CSS/JS. Setelah lulus, aktifkan aplikasi.
+6. Uji login, izin admin/viewer, Equipment Relocation, PO HQ, PO Varcost, dan Presales, termasuk upload/download, tabel, ekspor, serta aset CSS/JS. Setelah lulus, aktifkan aplikasi.
 7. Bila gagal, kembalikan paket kode lama dan backup database/dokumen yang sesuai. Migrasi database tidak otomatis dibatalkan hanya dengan mengembalikan file PHP.
 
 Workflow CD sengaja belum diberi host/path/credential fiktif. Setelah data cPanel dan baseline live tersedia, isi GitHub Environment secrets untuk SSH/SFTP dan buat workflow deployment dengan pemeriksaan baseline serta rollback. Hindari trigger otomatis dari setiap push sampai rilis awal berhasil diverifikasi.

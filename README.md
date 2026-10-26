@@ -1,12 +1,11 @@
-# SIMASTER: Infrastructure, Equipment Relocation, PO Monitoring
+# SIMASTER: Equipment Relocation & PO Monitoring
 
-Repository ini memuat tiga area SIMASTER yang dipilih:
+Repository ini hanya memuat dua area SIMASTER berikut:
 
-- **Infrastructure Management**: dashboard, BAPSS, Combat, Sewa Lahan, Site Telkomsel, Site TP, Recurring IPAS, Recurring Tagihan IPAS, Jaknet, Data Site Unlock, dan Upload File.
 - **Equipment Relocation**: inventaris RU/BBP, monitoring relokasi, pembaruan progress, impor, dan ekspor.
 - **PO Monitoring**: PO HQ, PO Varcost, dan Presales.
 
-Halaman Filament untuk ketiga area tersedia melalui panel `/report`. Setup lokal:
+Halaman Filament untuk kedua area tersedia melalui panel `/report`. Kerangka Laravel, autentikasi, dan utilitas laporan bersama tetap ada karena dipakai oleh modul tersebut. Setup lokal:
 
 ```powershell
 composer install
