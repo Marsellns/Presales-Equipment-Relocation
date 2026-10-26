@@ -3,7 +3,7 @@
 use App\Http\Controllers\Admin\UserApprovalController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\DocumentCirculationController;
+use App\Http\Controllers\PresalesController;
 use App\Http\Controllers\BapssController;
 use App\Http\Controllers\CombatSiteController;
 use App\Http\Controllers\DataSiteUnlockController;
@@ -47,19 +47,19 @@ Route::middleware('auth')->group(function () {
     Route::redirect('/rru', '/equipment-relocation')->name('rru.index');
 
     Route::prefix('po-monitoring/presales')->name('presales.')->group(function () {
-        Route::get('/', [DocumentCirculationController::class, 'index'])->name('index');
-        Route::get('/create', [DocumentCirculationController::class, 'create'])->name('create');
-        Route::post('/', [DocumentCirculationController::class, 'store'])->name('store');
-        Route::get('/{document}/file', [DocumentCirculationController::class, 'file'])->name('file');
-        Route::get('/{document}', [DocumentCirculationController::class, 'show'])->name('show');
-        Route::post('/{document}/status', [DocumentCirculationController::class, 'updateStatus'])->name('status');
+        Route::get('/', [PresalesController::class, 'index'])->name('index');
+        Route::get('/create', [PresalesController::class, 'create'])->name('create');
+        Route::post('/', [PresalesController::class, 'store'])->name('store');
+        Route::get('/{document}/file', [PresalesController::class, 'file'])->name('file');
+        Route::get('/{document}', [PresalesController::class, 'show'])->name('show');
+        Route::post('/{document}/status', [PresalesController::class, 'updateStatus'])->name('status');
     });
 
     Route::get('/po-monitoring/document-circulation', fn () => redirect()->route('presales.index'));
     Route::get('/po-monitoring/document-circulation/create', fn () => redirect()->route('presales.create'));
     Route::get('/po-monitoring/document-circulation/{document}', fn ($document) => redirect()->route('presales.show', $document));
-    Route::post('/po-monitoring/document-circulation', [DocumentCirculationController::class, 'store']);
-    Route::post('/po-monitoring/document-circulation/{document}/status', [DocumentCirculationController::class, 'updateStatus']);
+    Route::post('/po-monitoring/document-circulation', [PresalesController::class, 'store']);
+    Route::post('/po-monitoring/document-circulation/{document}/status', [PresalesController::class, 'updateStatus']);
 
 
     Route::get('/po-hq/data', [PoHqController::class, 'data'])->name('po-hq.data');
