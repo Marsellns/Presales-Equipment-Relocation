@@ -11,7 +11,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     const chartTextColor = () => document.documentElement.getAttribute("data-bs-theme") === "dark" ? "#d4dde8" : "#475569";
     const chartGridColor = () => document.documentElement.getAttribute("data-bs-theme") === "dark" ? "#425062" : "#e2e8f0";
     const chartPalette = window.SimasterChartPalette;
-    const chartColor = index => chartPalette.series[index % chartPalette.series.length];
+    const chartColor = index => typeof chartPalette?.colorForIndex === 'function'
+        ? chartPalette.colorForIndex(index)
+        : chartPalette.series[index % chartPalette.series.length];
 
     if (!chartAvailable) {
         console.warn(
@@ -39,6 +41,8 @@ document.addEventListener("DOMContentLoaded", async function () {
        ========================================================= */
 
     const ALL = "All";
+
+    const DONOR_ACCEPTOR_OPTIONS = ["Donor", "Acceptor"];
 
     const PIC_OPTIONS = [
         "NOP BOGOR",
@@ -657,7 +661,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                 }
 
                                 ctx.font =
-                                    "600 11px Inter, Arial, sans-serif";
+                                    "700 15px Inter, Arial, sans-serif";
 
                                 ctx.fillStyle = chartTextColor();
 
@@ -1324,7 +1328,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                          */
 
                         ctx.font =
-                            "700 13px Inter, Arial, sans-serif";
+                            "700 15px Inter, Arial, sans-serif";
 
                         ctx.fillStyle =
                             "#ffffff";
@@ -1341,7 +1345,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                          */
 
                         ctx.font =
-                            "600 10px Inter, Arial, sans-serif";
+                            "700 14px Inter, Arial, sans-serif";
 
                         ctx.fillText(
                             pct(percentage),
@@ -1405,7 +1409,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                  */
 
                 ctx.font =
-                    "700 18px Inter, Arial, sans-serif";
+                    "700 22px Inter, Arial, sans-serif";
 
                 ctx.fillStyle = chartTextColor();
 
@@ -1421,14 +1425,14 @@ document.addEventListener("DOMContentLoaded", async function () {
                  */
 
                 ctx.font =
-                    "500 10px Inter, Arial, sans-serif";
+                    "700 15px Inter, Arial, sans-serif";
 
                 ctx.fillStyle = chartTextColor();
 
                 ctx.fillText(
                     "Equipment",
                     centerX,
-                    centerY + 13
+                    centerY + 16
                 );
 
 
@@ -2932,8 +2936,13 @@ document.addEventListener("DOMContentLoaded", async function () {
         label,
         id,
         options,
-        value
+        value,
+        preserveCurrent = false
     ) {
+        const currentValue = String(value ?? "");
+        const fieldOptions = preserveCurrent && currentValue.trim() && !options.includes(currentValue)
+            ? [...options, currentValue]
+            : options;
 
         return `
             <div class="er-form-field">
@@ -2948,14 +2957,15 @@ document.addEventListener("DOMContentLoaded", async function () {
                         - Belum diisi -
                     </option>
 
-                    ${options
+                    ${fieldOptions
                         .map(
                             o => `
                                 <option
                                     value="${escapeHtml(o)}"
                                     ${
-                                        normalize(o) ===
-                                        normalize(value)
+                                        (preserveCurrent
+                                            ? o === currentValue
+                                            : normalize(o) === normalize(value))
                                             ? "selected"
                                             : ""
                                     }
@@ -3365,22 +3375,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                     <div class="er-form-grid">
 
-                        <div class="er-form-field">
-
-                            <label for="erDonorAcceptor">
-                                Donor/Acceptor
-                            </label>
-
-                            <input
-                                type="text"
-                                id="erDonorAcceptor"
-                                value="${escapeHtml(
-                                    item.donor_acceptor || ""
-                                )}"
-                                placeholder="mis. Donor / Acceptor info"
-                            >
-
-                        </div>
+                        ${optionalSelectField(
+                            "Donor/Acceptor",
+                            "erDonorAcceptor",
+                            DONOR_ACCEPTOR_OPTIONS,
+                            item.donor_acceptor,
+                            true
+                        )}
 
 
                         <div class="er-form-field">

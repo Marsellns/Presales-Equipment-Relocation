@@ -35,20 +35,15 @@
 
             <h1>Equipment Relocation</h1>
 
-            <p class="page-description">
-                Monitoring seluruh equipment (RU &amp; BBP), status eligibility (Safe/Not Safe
-                to Reloc), serta progress relokasinya antar site.
-            </p>
         </div>
 
         <div class="header-actions">
-
             <a
-                class="btn-secondary"
+                class="btn-secondary er-excel-download d-inline-flex align-items-center gap-1 text-nowrap"
                 href="{{ route('equipment-relocation.export-excel') }}"
             >
                 <svg class="er-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 20h16"/></svg>
-                Download Excel
+                Excel
             </a>
 
             @if ($canEditRelocation)
@@ -103,7 +98,6 @@
             <div class="kpi-content">
                 <span>Total BBP</span>
                 <h2 id="erKpiBbpTotal">0</h2>
-                <small>Seluruh equipment BBP (Safe &amp; Not Safe)</small>
             </div>
         </div>
 
@@ -120,9 +114,8 @@
             </div>
 
             <div class="kpi-content">
-                <span>Total BBP Safe to Reloc</span>
+                <span>BBP Siap Relokasi</span>
                 <h2 id="erKpiBbpSafe">0</h2>
-                <small>Equipment BBP not utilize &amp; aman direlokasi</small>
             </div>
         </div>
 
@@ -141,7 +134,6 @@
             <div class="kpi-content">
                 <span>Total RU</span>
                 <h2 id="erKpiRuTotal">0</h2>
-                <small>Seluruh equipment RU (Safe &amp; Not Safe)</small>
             </div>
         </div>
 
@@ -158,9 +150,8 @@
             </div>
 
             <div class="kpi-content">
-                <span>Total RU Safe to Reloc</span>
+                <span>RU Siap Relokasi</span>
                 <h2 id="erKpiRuSafe">0</h2>
-                <small>Equipment RU not utilize &amp; aman direlokasi</small>
             </div>
         </div>
 
@@ -177,9 +168,8 @@
             </div>
 
             <div class="kpi-content">
-                <span>On Going</span>
+                <span>Relokasi Berjalan</span>
                 <h2 id="erKpiOnGoing">0</h2>
-                <small>Proses relokasi berjalan (RU &amp; BBP)</small>
             </div>
         </div>
 
@@ -433,11 +423,11 @@
                 </button>
 
                 <button
-                    class="btn-secondary"
+                    class="btn-secondary text-nowrap"
                     id="erExportData"
                 >
                     <svg class="er-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 20h16"/></svg>
-                    Export Inventory CSV
+                    Inventory CSV
                 </button>
 
             </div>
@@ -573,7 +563,7 @@
 
                 <!-- NOP -->
                 <div class="global-filter-group">
-                    <label class="global-filter-label">NOP</label>
+                    <label class="global-filter-label" for="erFilterNop">NOP</label>
                     <select id="erFilterNop" class="global-filter-select">
                         <option value="All">Semua NOP</option>
                     </select>
@@ -581,7 +571,7 @@
 
                 <!-- EQUIPMENT GROUP -->
                 <div class="global-filter-group">
-                    <label class="global-filter-label">Kategori Equipment</label>
+                    <label class="global-filter-label" for="erFilterGroup">Kategori Equipment</label>
                     <select id="erFilterGroup" class="global-filter-select">
                         <option value="All">Semua Kategori</option>
                         <option value="RU">RU (Radio Unit)</option>
@@ -591,7 +581,7 @@
 
                 <!-- EQUIPMENT TYPE -->
                 <div class="global-filter-group">
-                    <label class="global-filter-label">Tipe Equipment</label>
+                    <label class="global-filter-label" for="erFilterType">Tipe Equipment</label>
                     <select id="erFilterType" class="global-filter-select">
                         <option value="All">Semua Tipe</option>
                     </select>
@@ -601,7 +591,7 @@
                 <!-- Fixed, normalized 2-value vocabulary (SAFE / NOT SAFE),
                      not populated from raw source text - see equipment-relocation.js -->
                 <div class="global-filter-group">
-                    <label class="global-filter-label">Safe to Reloc</label>
+                    <label class="global-filter-label" for="erFilterSafe">Safe to Reloc</label>
                     <select id="erFilterSafe" class="global-filter-select">
                         <option value="All">Semua Eligibility</option>
                         <option value="SAFE">SAFE</option>
@@ -611,7 +601,7 @@
 
                 <!-- STATUS (RELOCATION PROGRESS) -->
                 <div class="global-filter-group">
-                    <label class="global-filter-label">Status Progress</label>
+                    <label class="global-filter-label" for="erFilterStatus">Status Progress</label>
                     <select id="erFilterStatus" class="global-filter-select">
                         <option value="All">Semua Status</option>
                         <option value="Belum Diisi">Belum Diisi</option>
@@ -623,7 +613,7 @@
 
                 <!-- PIC -->
                 <div class="global-filter-group">
-                    <label class="global-filter-label">PIC</label>
+                    <label class="global-filter-label" for="erFilterPic">PIC</label>
                     <select id="erFilterPic" class="global-filter-select">
                         <option value="All">Semua PIC</option>
                         <option value="NOP BOGOR">NOP BOGOR</option>
