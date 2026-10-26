@@ -35,7 +35,7 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link {{ request()->routeIs('equipment-relocation.*') ? 'active' : '' }}" href="{{ route('equipment-relocation.index') }}">Equipment Relocation</a></li>
                         <li class="nav-item"><a class="nav-link {{ request()->routeIs('presales.*') ? 'active' : '' }}" href="{{ route('presales.index') }}">Presales</a></li>
-                        <li class="nav-item"><a class="nav-link {{ request()->is('report*') ? 'active' : '' }}" href="{{ url('/report') }}">Infrastructure &amp; PO Monitoring</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->is('report*') ? 'active' : '' }}" href="{{ url('/report') }}">Equipment Relocation &amp; PO Monitoring</a></li>
                         @if (auth()->user()->hasRole('admin'))
                             <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.*') ? 'active' : '' }}" href="{{ route('admin.user-approvals.index') }}">Persetujuan Akun</a></li>
                         @endif

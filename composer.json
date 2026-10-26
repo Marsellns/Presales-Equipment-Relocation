@@ -2,7 +2,7 @@
     "$schema": "https://getcomposer.org/schema.json",
     "name": "simaster/infrastructure-equipment-po-monitoring",
     "type": "project",
-    "description": "SIMASTER Infrastructure Management, Equipment Relocation, and PO Monitoring modules.",
+    "description": "SIMASTER Equipment Relocation and PO Monitoring modules.",
     "keywords": ["laravel", "infrastructure-management", "equipment-relocation", "po-monitoring", "presales"],
     "license": "MIT",
     "require": {

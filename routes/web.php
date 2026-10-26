@@ -3,20 +3,10 @@
 use App\Http\Controllers\Admin\UserApprovalController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\PresalesController;
-use App\Http\Controllers\BapssController;
-use App\Http\Controllers\CombatSiteController;
-use App\Http\Controllers\DataSiteUnlockController;
 use App\Http\Controllers\EquipmentRelocationController;
-use App\Http\Controllers\InfrastructureDashboardController;
-use App\Http\Controllers\InfrastructureUploadController;
-use App\Http\Controllers\JaknetContractController;
 use App\Http\Controllers\PoHqController;
 use App\Http\Controllers\PoVarcostController;
-use App\Http\Controllers\RecurringIpasController;
-use App\Http\Controllers\RecurringTagihanIpasController;
-use App\Http\Controllers\SewaLahanRenewalController;
-use App\Http\Controllers\UploadFileController;
+use App\Http\Controllers\PresalesController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/equipment-relocation');
@@ -77,82 +67,4 @@ Route::middleware('auth')->group(function () {
     Route::put('/po-varcost/{po_varcost}', [PoVarcostController::class, 'update'])->name('po-varcost.update')->middleware('role:admin');
     Route::delete('/po-varcost/{po_varcost}', [PoVarcostController::class, 'destroy'])->name('po-varcost.destroy')->middleware('role:admin');
 
-    Route::prefix('infrastruktur')->name('infrastruktur.')->group(function () {
-        Route::get('/', [InfrastructureDashboardController::class, 'index'])->name('index');
-        Route::get('/dashboard-data', [InfrastructureDashboardController::class, 'data'])->name('dashboard.data');
-        Route::get('/dashboard-details', [InfrastructureDashboardController::class, 'details'])->name('dashboard.details');
-
-        // Upload dataset per modul (halaman khusus, tanpa menu baru).
-        Route::get('{dataset}/upload', [InfrastructureUploadController::class, 'create'])
-            ->whereIn('dataset', ['sewa-lahan', 'combat', 'recurring-ipas', 'recurring-tagihan-ipas', 'jaknet', 'site-unlock', 'bapss'])
-            ->name('upload');
-        Route::get('{dataset}/template', [InfrastructureUploadController::class, 'template'])
-            ->whereIn('dataset', ['sewa-lahan', 'combat', 'recurring-ipas', 'recurring-tagihan-ipas', 'jaknet', 'site-unlock', 'bapss'])
-            ->name('upload.template');
-        Route::get('{dataset}/export-excel', [InfrastructureUploadController::class, 'export'])
-            ->whereIn('dataset', ['recurring-tagihan-ipas', 'site-unlock'])
-            ->name('upload.export');
-        Route::post('{dataset}/upload', [InfrastructureUploadController::class, 'store'])
-            ->whereIn('dataset', ['sewa-lahan', 'combat', 'recurring-ipas', 'recurring-tagihan-ipas', 'jaknet', 'site-unlock', 'bapss'])
-            ->name('upload.store')->middleware('role:admin');
-
-        // -- Combat --
-        Route::get('combat/data', [CombatSiteController::class, 'data'])->name('combat.data');
-        Route::get('combat/export-excel', [CombatSiteController::class, 'exportExcel'])->name('combat.export-excel');
-        Route::resource('combat', CombatSiteController::class)
-            ->only(['index', 'edit', 'update', 'destroy'])
-            ->parameters(['combat' => 'combat'])
-            ->middlewareFor(['edit', 'update', 'destroy'], 'role:admin');
-
-        // -- Sewa Lahan (Renewal) --
-        Route::get('sewa-lahan/data', [SewaLahanRenewalController::class, 'data'])->name('sewa-lahan.data');
-        Route::get('sewa-lahan/export-excel', [SewaLahanRenewalController::class, 'exportExcel'])->name('sewa-lahan.export-excel');
-        Route::get('sewa-lahan/{sewaLahan}/cetak-sip', [SewaLahanRenewalController::class, 'cetakSip'])->name('sewa-lahan.cetak-sip');
-        Route::resource('sewa-lahan', SewaLahanRenewalController::class)
-            ->only(['index', 'edit', 'update', 'destroy'])
-            ->parameters(['sewa-lahan' => 'sewaLahan'])
-            ->middlewareFor(['edit', 'update', 'destroy'], 'role:admin');
-
-        // -- Recurring (ANT & Ipas) — read-only --
-        Route::get('recurring-ipas', [RecurringIpasController::class, 'index'])->name('recurring-ipas.index');
-        Route::get('recurring-ipas/data', [RecurringIpasController::class, 'data'])->name('recurring-ipas.data');
-        Route::get('recurring-ipas/export-excel', [RecurringIpasController::class, 'exportExcel'])->name('recurring-ipas.export-excel');
-        Route::get('recurring-ipas/export-csv', [RecurringIpasController::class, 'exportCsv'])->name('recurring-ipas.export-csv');
-
-        // -- Recurring (Tagihan Ipas) — read-only --
-        Route::get('recurring-tagihan-ipas', [RecurringTagihanIpasController::class, 'index'])->name('recurring-tagihan-ipas.index');
-        Route::get('recurring-tagihan-ipas/data', [RecurringTagihanIpasController::class, 'data'])->name('recurring-tagihan-ipas.data');
-
-        // -- Sewa Lahan (Jaknet & Dapot) — read-only --
-        Route::get('jaknet', [JaknetContractController::class, 'index'])->name('jaknet.index');
-        Route::get('jaknet/data', [JaknetContractController::class, 'data'])->name('jaknet.data');
-        Route::get('jaknet/export-excel', [JaknetContractController::class, 'exportExcel'])->name('jaknet.export-excel');
-
-        // -- Data Site Unlock — read-only --
-        Route::get('site-unlock', [DataSiteUnlockController::class, 'index'])->name('site-unlock.index');
-        Route::get('site-unlock/data', [DataSiteUnlockController::class, 'data'])->name('site-unlock.data');
-
-        // -- BAPSS --
-        Route::get('bapss/data', [BapssController::class, 'data'])->name('bapss.data');
-        Route::get('bapss/export-excel', [BapssController::class, 'exportExcel'])->name('bapss.export-excel');
-        Route::get('bapss/export-csv', [BapssController::class, 'exportCsv'])->name('bapss.export-csv');
-        Route::get('bapss/{bapss}/file/{type}', [BapssController::class, 'file'])
-            ->whereIn('type', ['bapss', 'dismantle'])
-            ->name('bapss.file');
-        Route::get('bapss/{bapss}', [BapssController::class, 'show'])->name('bapss.show');
-        Route::resource('bapss', BapssController::class)
-            ->only(['index', 'edit', 'update', 'destroy'])
-            ->parameters(['bapss' => 'bapss'])
-            ->middlewareFor(['edit', 'update', 'destroy'], 'role:admin');
-
-        // -- Upload File PDF --
-        Route::get('upload-file/data', [UploadFileController::class, 'data'])->name('upload-file.data');
-        Route::get('upload-file/{uploadFile}/file', [UploadFileController::class, 'file'])->name('upload-file.file');
-        Route::resource('upload-file', UploadFileController::class)
-            ->only(['index', 'create', 'store', 'edit', 'update', 'destroy'])
-            ->parameters(['upload-file' => 'uploadFile'])
-            ->middlewareFor(['create', 'store', 'edit', 'update', 'destroy'], 'role:admin');
-    });
-
-    Route::redirect('/infrastructure-management', '/infrastruktur')->name('concept.infrastructure-management');
 });

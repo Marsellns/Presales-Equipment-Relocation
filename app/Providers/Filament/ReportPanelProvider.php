@@ -33,7 +33,7 @@ class ReportPanelProvider extends PanelProvider
             ->colors(['primary' => Color::Red])
             ->maxContentWidth('full')
             ->sidebarCollapsibleOnDesktop()
-            ->homeUrl(fn () => route('infrastruktur.index'))
+            ->homeUrl(fn () => route('equipment-relocation.index'))
             ->plugins(ReportModuleRegistry::plugins())
             ->navigation(fn (NavigationBuilder $builder) => $builder->groups(ModuleNavigation::groups()))
             ->renderHook('panels::head.end', fn () => view('filament.partials.module-assets'))
